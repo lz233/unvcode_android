@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Typeface
-import com.google.code.appengine.awt.Color
+import android.graphics.Color
 import java.text.Normalizer
 
 object Unvcode {
@@ -21,36 +21,36 @@ object Unvcode {
         }
     }
 
-    fun 真画皮(字: Char):Bitmap{
-        val bitmap = Bitmap.createBitmap(100,100,Bitmap.Config.RGB_565)
+    fun 真画皮(字: Char): Bitmap {
+        val bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.RGB_565)
         val canvas = Canvas(bitmap)
-        canvas.drawColor(android.graphics.Color.BLACK)
-        canvas.drawText(字.toString(),0f,90f, Paint().apply {
-            textSize=100f
-            typeface= Typeface.DEFAULT
-            color=android.graphics.Color.WHITE
+        canvas.drawColor(Color.BLACK)
+        canvas.drawText(字.toString(), 0f, 90f, Paint().apply {
+            textSize = 100f
+            typeface = Typeface.DEFAULT
+            color = Color.WHITE
         })
         return bitmap
     }
 
     private fun 画皮(字: Char): List<Int> {
-        val bitmap = Bitmap.createBitmap(100,100,Bitmap.Config.RGB_565)
+        val bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.RGB_565)
         val canvas = Canvas(bitmap)
-        canvas.drawColor(android.graphics.Color.BLACK)
-        canvas.drawText(字.toString(),0f,90f, Paint().apply {
-            textSize=100f
-            typeface= Typeface.DEFAULT
-            color=android.graphics.Color.WHITE
+        canvas.drawColor(Color.BLACK)
+        canvas.drawText(字.toString(), 0f, 90f, Paint().apply {
+            textSize = 100f
+            typeface = Typeface.DEFAULT
+            color = Color.WHITE
         })
-        val pix=IntArray(100*100)
-        bitmap.getPixels(pix,0,100,0,0,100,100)
+        val pix = IntArray(100 * 100)
+        bitmap.getPixels(pix, 0, 100, 0, 0, 100, 100)
         return mutableListOf<Int>().apply {
-            pix.forEach {
-                val color = Color(it)
-                add(color.red / 255)
-                add(color.green / 255)
-                add(color.blue / 255)
+            pix.forEach { 颜色 ->
+                add(颜色.red() / 255)
+                add(颜色.green() / 255)
+                add(颜色.blue() / 255)
             }
+            bitmap.recycle()
         }
     }
 
@@ -81,3 +81,6 @@ object Unvcode {
 }
 
 fun String.unvcode(skipAscii: Boolean = true, mse: Double = 0.1) = Unvcode.转换(this, skipAscii, mse)
+private fun Int.red() = Color.red(this)
+private fun Int.green() = Color.green(this)
+private fun Int.blue() = Color.blue(this)
