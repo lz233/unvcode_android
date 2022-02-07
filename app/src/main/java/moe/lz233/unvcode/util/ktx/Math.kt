@@ -1,5 +1,7 @@
 package moe.lz233.unvcode.util
 
+import kotlin.math.pow
+
 fun List<Int>.sum(): Int {
     var sum = 0
     this.forEach { sum += it }
@@ -12,7 +14,7 @@ fun List<Int>.variance(): Double {
     val average = this.average()
     var variance = 0.0
     this.forEach {
-        variance += (Math.pow(it - average, 2.0))
+        variance += ((it - average).pow(2.0))
     }
     return variance / this.size
 }

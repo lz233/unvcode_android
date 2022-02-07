@@ -5,6 +5,9 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.graphics.Color
+import moe.lz233.unvcode.util.ktx.blue
+import moe.lz233.unvcode.util.ktx.green
+import moe.lz233.unvcode.util.ktx.red
 import java.text.Normalizer
 
 object Unvcode {
@@ -21,36 +24,24 @@ object Unvcode {
         }
     }
 
-    fun 真画皮(字: Char): Bitmap {
-        val bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.RGB_565)
-        val canvas = Canvas(bitmap)
-        canvas.drawColor(Color.BLACK)
-        canvas.drawText(字.toString(), 0f, 90f, Paint().apply {
-            textSize = 100f
-            typeface = Typeface.DEFAULT
-            color = Color.WHITE
-        })
-        return bitmap
-    }
-
     private fun 画皮(字: Char): List<Int> {
-        val bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.RGB_565)
-        val canvas = Canvas(bitmap)
-        canvas.drawColor(Color.BLACK)
-        canvas.drawText(字.toString(), 0f, 90f, Paint().apply {
+        val 图 = Bitmap.createBitmap(100, 100, Bitmap.Config.RGB_565)
+        val 布 = Canvas(图)
+        布.drawColor(Color.BLACK)
+        布.drawText(字.toString(), 0f, 90f, Paint().apply {
             textSize = 100f
             typeface = Typeface.DEFAULT
             color = Color.WHITE
         })
-        val pix = IntArray(100 * 100)
-        bitmap.getPixels(pix, 0, 100, 0, 0, 100, 100)
+        val 像素 = IntArray(100 * 100)
+        图.getPixels(像素, 0, 100, 0, 0, 100, 100)
         return mutableListOf<Int>().apply {
-            pix.forEach { 颜色 ->
+            像素.forEach { 颜色 ->
                 add(颜色.red() / 255)
                 add(颜色.green() / 255)
                 add(颜色.blue() / 255)
             }
-            bitmap.recycle()
+            图.recycle()
         }
     }
 
@@ -64,7 +55,7 @@ object Unvcode {
         }
         val 差异 = 差异组.minOrNull()!!
         val 新字 = 候选组[差异组.minIndex()]
-        if (差异 > mse) return (-1.0 to 字) else return (差异 to 新字)
+        return if (差异 > mse) (-1.0 to 字) else (差异 to 新字)
     }
 
     fun 转换(s: String, skipAscii: Boolean = true, mse: Double = 0.1): Pair<String, List<Double>> {
@@ -79,8 +70,3 @@ object Unvcode {
         return (串 to 差异列)
     }
 }
-
-fun String.unvcode(skipAscii: Boolean = true, mse: Double = 0.1) = Unvcode.转换(this, skipAscii, mse)
-private fun Int.red() = Color.red(this)
-private fun Int.green() = Color.green(this)
-private fun Int.blue() = Color.blue(this)
