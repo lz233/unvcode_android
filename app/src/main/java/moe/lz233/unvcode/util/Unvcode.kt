@@ -1,10 +1,6 @@
 package moe.lz233.unvcode.util
 
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Typeface
-import android.graphics.Color
+import android.graphics.*
 import moe.lz233.unvcode.util.ktx.blue
 import moe.lz233.unvcode.util.ktx.green
 import moe.lz233.unvcode.util.ktx.red
@@ -24,7 +20,7 @@ object Unvcode {
         }
     }
 
-    private fun 画皮(字: Char): List<Int> {
+    fun 真画皮(字: Char): Bitmap {
         val 图 = Bitmap.createBitmap(100, 100, Bitmap.Config.RGB_565)
         val 布 = Canvas(图)
         布.drawColor(Color.BLACK)
@@ -33,6 +29,11 @@ object Unvcode {
             typeface = Typeface.DEFAULT
             color = Color.WHITE
         })
+        return 图
+    }
+
+    private fun 画皮(字: Char): List<Int> {
+        val 图 = 真画皮(字)
         val 像素 = IntArray(100 * 100)
         图.getPixels(像素, 0, 100, 0, 0, 100, 100)
         return mutableListOf<Int>().apply {
@@ -47,7 +48,7 @@ object Unvcode {
 
     private fun 比较(字1: Char, 字2: Char) = (画皮(字1) minus 画皮(字2)).variance()
 
-    private fun 假面(字: Char, skipAscii: Boolean, mse: Double = 0.1): Pair<Double, Char> {
+    private fun 假面(字: Char, skipAscii: Boolean, mse: Float = 0.1f): Pair<Double, Char> {
         if ((字.code < 128) and skipAscii) return (-1.0 to 字)
         val 候选组 = d[字] ?: return (-1.0 to 字)
         val 差异组 = mutableListOf<Double>().apply {
@@ -58,7 +59,7 @@ object Unvcode {
         return if (差异 > mse) (-1.0 to 字) else (差异 to 新字)
     }
 
-    fun 转换(s: String, skipAscii: Boolean = true, mse: Double = 0.1): Pair<String, List<Double>> {
+    fun 转换(s: String, skipAscii: Boolean = true, mse: Float = 0.1f): Pair<String, List<Double>> {
         val 差异列 = mutableListOf<Double>()
         val 串 = StringBuilder().apply {
             s.toCharArray().forEach {

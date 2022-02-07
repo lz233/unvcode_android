@@ -2,4 +2,10 @@
 <resources>
     <string name="app_name">Unvcode</string>
     <string name="toast">不許自慰！</string>
+    <string name="input">輸入</string>
+    <string name="output">輸出</string>
+    <string name="noText">沒有文字</string>
+    <string name="skipAscii">跳過 ASCII</string>
+    <string name="highMse">高容差度</string>
+    <string name="convert">轉換</string>
 </resources>

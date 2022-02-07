@@ -6,8 +6,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import moe.lz233.unvcode.R
 import moe.lz233.unvcode.util.LogUtil
-import moe.lz233.unvcode.util.Unvcode
-import moe.lz233.unvcode.util.unvcode
+import moe.lz233.unvcode.util.ktx.unvcode
 
 class ProcessActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
