@@ -2,6 +2,10 @@
 
 好耶，是[【幼女 Code For Kotlin】](https://github.com/lz233/unvcode_kotlin)的 Android 版本！可以很方便地完成一些事情啦！
 
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+    alt="Get it on F-Droid"
+    height="80">](https://f-droid.org/packages/moe.lz233.unvcode)
+
 ## 原理和效果
 
 参见原 repo，我才不会再说一遍的（
